@@ -1,0 +1,299 @@
+/* Dataset Detective: Streamlit theme
+   One accent (ultramarine), cool neutrals, flat surfaces, thin borders. */
+
+:root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --ink: #1b1f2a;
+    --muted: #5b6472;
+    --line: #dde1e7;
+    --accent: #2d4fd6;
+    --accent-hover: #2340b8;
+    --accent-soft: #e8edfc;
+    --radius: 6px;
+}
+
+/* Base */
+html, body, .stApp, [class*="css"] {
+    font-family: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--ink);
+}
+
+.stApp {
+    background: var(--bg);
+}
+
+[data-testid="stHeader"] {
+    background: transparent;
+}
+
+.block-container {
+    max-width: 1180px;
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+}
+
+/* Force readable text even if Streamlit starts in dark mode */
+[data-testid="stWidgetLabel"] p,
+[data-testid="stSidebar"] label p,
+[data-testid="stSidebar"] p,
+[data-testid="stFileUploader"] label p,
+[data-testid="stMarkdownContainer"] p,
+.stApp li {
+    color: var(--ink);
+}
+
+[data-testid="stFileUploaderDropzoneInstructions"] *,
+[data-testid="stFileUploader"] small {
+    color: var(--muted) !important;
+}
+
+/* Type scale */
+h1 {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    padding-bottom: 0.25rem !important;
+}
+
+h2, h3 {
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+h3 {
+    font-size: 1.2rem !important;
+}
+
+p, li, label {
+    line-height: 1.6;
+}
+
+[data-testid="stMarkdownContainer"] p {
+    max-width: 68ch;
+}
+
+hr {
+    border: none !important;
+    border-top: 1px solid var(--line) !important;
+    margin: 1.75rem 0 !important;
+}
+
+/* Sidebar as navigation */
+[data-testid="stSidebar"] {
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+}
+
+[data-testid="stSidebar"] h1 {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: var(--muted);
+}
+
+[data-testid="stSidebar"] [role="radiogroup"] {
+    gap: 2px;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius);
+    margin: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* hide the radio dot, the highlighted row shows the selection */
+[data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
+    display: none !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: var(--bg);
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+    background: var(--accent-soft);
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Metrics */
+[data-testid="stMetric"] {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+}
+
+[data-testid="stMetricLabel"] p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 1.75rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Buttons */
+.stButton > button,
+[data-testid="stDownloadButton"] > button {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 0.5rem 1.1rem;
+    font-weight: 600;
+    box-shadow: none;
+    transition: background-color 0.15s ease;
+}
+
+.stButton > button:hover,
+[data-testid="stDownloadButton"] > button:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: #fff;
+}
+
+.stButton > button:active,
+[data-testid="stDownloadButton"] > button:active {
+    background: var(--accent-hover);
+    color: #fff;
+}
+
+/* Inputs */
+div[data-baseweb="select"] > div,
+div[data-baseweb="input"] > div {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: none;
+}
+
+div[data-baseweb="select"] > div:hover {
+    border-color: #b9c0cb;
+}
+
+div[data-baseweb="select"] > div:focus-within {
+    border-color: var(--accent);
+}
+
+.stSelectbox label p,
+.stMultiSelect label p,
+.stRadio > label p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+/* Multiselect tags */
+span[data-baseweb="tag"] {
+    background: var(--accent-soft) !important;
+    color: var(--accent) !important;
+    border-radius: 4px;
+}
+
+/* File uploader */
+[data-testid="stFileUploader"] section {
+    background: var(--surface);
+    border: 1px dashed #b9c0cb;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+[data-testid="stFileUploader"] section:hover {
+    border-color: var(--accent);
+}
+
+[data-testid="stFileUploader"] button {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+}
+
+[data-testid="stFileUploader"] button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--surface);
+}
+
+/* Alerts: flat, with a coloured left edge that carries the status */
+[data-testid="stAlert"] {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left-width: 4px;
+    border-radius: var(--radius);
+    color: var(--ink);
+}
+
+[data-testid="stAlert"] > div,
+[data-testid="stAlert"] [data-baseweb="notification"] {
+    background: var(--surface) !important;
+    box-shadow: none !important;
+    color: var(--ink) !important;
+}
+
+[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) { border-left-color: #2e7d4f; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentError"])   { border-left-color: #c0392b; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) { border-left-color: #b7791f; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"])    { border-left-color: var(--accent); }
+
+div[data-testid="stAlertContentSuccess"] { color: var(--ink); }
+div[data-testid="stAlertContentError"]   { color: var(--ink); }
+div[data-testid="stAlertContentWarning"] { color: var(--ink); }
+div[data-testid="stAlertContentInfo"]    { color: var(--ink); }
+
+/* Tables and charts */
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+}
+
+[data-testid="stImage"] img,
+[data-testid="stPyplot"] img {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.75rem;
+}
+
+/* Keyboard focus */
+:focus-visible {
+    outline: 2px solid var(--accent) !important;
+    outline-offset: 2px;
+}
+
+/* Hide Streamlit chrome */
+#MainMenu,
+[data-testid="stToolbar"],
+[data-testid="stDeployButton"],
+footer {
+    visibility: hidden;
+}
+
+/* Small screens */
+@media (max-width: 640px) {
+    .block-container {
+        padding: 1.25rem 1rem 3rem;
+    }
+    h1 {
+        font-size: 1.6rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
