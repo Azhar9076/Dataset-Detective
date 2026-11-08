@@ -36,10 +36,17 @@ def load_dataset(file):
     return pd.read_csv(file)
 
 
-def load_css(file_name: str) -> None:
-    css = Path(__file__).parent / file_name
-    st.markdown(f"<style>{css.read_text()}</style>", unsafe_allow_html=True)
+def load_css(file_name):
+    css_path = Path(__file__).parent / file_name
 
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8")
+        st.markdown(
+            f"<style>{css}</style>",
+            unsafe_allow_html=True
+        )
+    else:
+        st.warning(f"{file_name} not found!")
 
 
 # Page Configuration

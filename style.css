@@ -1,381 +1,95 @@
 /* ==========================================================
-   Dataset Detective — analytics UI for Streamlit
-   Concept: graph-paper workspace, ink-navy sidebar,
-   one data color per metric (blue / mint / yellow / coral)
+   Dataset Detective — Streamlit UI
+   Graph-paper workspace + ink-navy sidebar
    ========================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap");
 
 :root {
-  --paper:   #eef1f6;
-  --card:    #ffffff;
-  --ink:     #14213d;
-  --ink-2:   #4a5878;   /* secondary text */
-  --rule:    #d3d9e6;   /* borders */
-  --blue:    #2b4dff;   /* primary action */
-  --mint:    #12b886;
-  --yellow:  #ffd43b;
-  --coral:   #ff6b57;
-  --r-card:  8px;
-  --r-ctl:   6px;
+    --paper: #eef1f6;
+    --card: #ffffff;
+    --ink: #14213d;
+    --ink-2: #4a5878;
+    --rule: #d3d9e6;
+    --blue: #2b4dff;
+    --mint: #12b886;
+    --yellow: #ffd43b;
+    --coral: #ff6b57;
+    --r-card: 8px;
+    --r-ctl: 6px;
 }
 
-/* ---------- Base ---------- */
-html, body, .stApp, [class*="css"] {
-  font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-variant-numeric: tabular-nums;
-}
-
+/* ---------- App background and typography ---------- */
+html,
+body,
+[data-testid="stAppViewContainer"],
+[data-testid="stApp"],
 .stApp {
-  color: var(--ink);
-  background-color: var(--paper);
-  /* graph paper */
-  background-image:
-    linear-gradient(rgba(20, 33, 61, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 33, 61, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px;
+    font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
 }
 
-[data-testid="stHeader"] { background: transparent; }
-#MainMenu, footer { visibility: hidden; }
+[data-testid="stAppViewContainer"] {
+    background-color: var(--paper);
+    background-image:
+        linear-gradient(rgba(20, 33, 61, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 33, 61, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
 
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"] {
+    background: transparent;
+}
+
+[data-testid="stHeader"] {
+    background: transparent;
+}
+
+#MainMenu,
+footer {
+    visibility: hidden;
+}
+
+[data-testid="stMainBlockContainer"],
 .block-container {
-  max-width: 1180px;
-  padding-top: 2.5rem;
-  padding-bottom: 4rem;
+    max-width: 1180px;
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
 }
 
-/* ---------- Type ---------- */
 h1, h2, h3, h4 {
-  font-family: "Familjen Grotesk", "Instrument Sans", sans-serif;
-  color: var(--ink);
-  letter-spacing: -0.015em;
+    font-family: "Familjen Grotesk", "Instrument Sans", sans-serif;
+    color: var(--ink);
+    letter-spacing: -0.015em;
 }
 
-h1 { font-size: clamp(2.4rem, 4.5vw, 3.6rem); font-weight: 700; line-height: 1.05; }
+h1 {
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
 h2 { font-size: 1.9rem; font-weight: 700; }
 h3 { font-size: 1.35rem; font-weight: 700; }
 
 [data-testid="stMarkdownContainer"] p {
-  color: var(--ink);
-  line-height: 1.65;
-  max-width: 72ch;
+    color: var(--ink);
+    line-height: 1.65;
+    max-width: 72ch;
 }
 
-hr { border: none; border-top: 1.5px solid var(--ink); opacity: 0.12; margin: 2rem 0; }
-
-/* ---------- Sidebar (the dark anchor) ---------- */
-[data-testid="stSidebar"] {
-  background: var(--ink);
-  border-right: none;
+hr {
+    border: none;
+    border-top: 1.5px solid var(--ink);
+    opacity: 0.12;
+    margin: 2rem 0;
 }
 
-[data-testid="stSidebar"] [data-testid="stSidebarContent"] { padding-top: 0.5rem; }
-
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3 {
-  color: #ffffff;
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin: 1.25rem 0 0.5rem;
-}
-
-[data-testid="stSidebar"] p,
-[data-testid="stSidebar"] span { color: #e9edf7; }
-
-[data-testid="stSidebar"] img { border-radius: var(--r-card); }
-
-/* widget label ("Select Section"): readable on navy */
-[data-testid="stSidebar"] label[data-testid="stWidgetLabel"] p {
-  color: #a9b6d6;
-  font-size: 0.85rem;
-}
-
-/* ----- nav items ----- */
-[data-testid="stSidebar"] [role="radiogroup"] {
-  gap: 0.25rem;
-  width: 100%;
-}
-
-[data-testid="stSidebar"] [role="radiogroup"] label {
-  width: 100%;
-  margin: 0;
-  padding: 0.65rem 0.9rem;
-  border-radius: var(--r-ctl);
-  cursor: pointer;
-  align-items: center;
-  transition: background 0.15s ease;
-}
-
-/* hide the radio dot */
-[data-testid="stSidebar"] [role="radiogroup"] label > div:first-child { display: none; }
-
-[data-testid="stSidebar"] [role="radiogroup"] label p {
-  margin: 0;
-  font-size: 0.97rem;
-  font-weight: 500;
-  color: #dfe5f4;
-}
-
-[data-testid="stSidebar"] [role="radiogroup"] label:hover { background: rgba(255, 255, 255, 0.08); }
-
-/* active item */
-[data-testid="stSidebar"] [role="radiogroup"] label[aria-checked="true"],
-[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
-  background: var(--yellow);
-}
-
-[data-testid="stSidebar"] [role="radiogroup"] label[aria-checked="true"] p,
-[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) p {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-/* sidebar footer: dataset status */
-[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
-[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
-  color: #a9b6d6;
-  font-size: 0.85rem;
-}
-
-[data-testid="stSidebar"] hr { border-top-color: #ffffff; opacity: 0.15; }
-
-/* ---------- Buttons (the one bold element) ---------- */
-.stButton > button,
-.stDownloadButton > button {
-  background: var(--blue);
-  color: #ffffff;
-  font-weight: 600;
-  border: 1.5px solid var(--ink);
-  border-radius: var(--r-ctl);
-  padding: 0.6rem 1.3rem;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-
-.stButton > button:hover,
-.stDownloadButton > button:hover {
-  color: #ffffff;
-  border-color: var(--ink);
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-.stButton > button:active,
-.stDownloadButton > button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--ink);
-}
-
-.stButton > button:focus-visible,
-.stDownloadButton > button:focus-visible,
-[data-testid="stFileUploader"] button:focus-visible {
-  outline: 3px solid var(--yellow);
-  outline-offset: 2px;
-}
-
-/* ---------- File uploader ---------- */
-[data-testid="stFileUploader"] section {
-  background: var(--card);
-  border: 2px dashed var(--ink);
-  border-radius: var(--r-card);
-  padding: 2rem 1.5rem;
-  transition: background 0.15s ease;
-}
-
-[data-testid="stFileUploader"] section:hover { background: #f7f9ff; }
-
-[data-testid="stFileUploader"] button {
-  background: var(--card);
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-  border-radius: var(--r-ctl);
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-/* ---------- Inputs & selects ---------- */
-[data-baseweb="select"] > div,
-[data-baseweb="input"] > div,
-[data-baseweb="textarea"] {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-ctl);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-[data-baseweb="select"] > div:hover,
-[data-baseweb="input"] > div:hover { border-color: var(--ink-2); }
-
-[data-baseweb="select"] > div:focus-within,
-[data-baseweb="input"] > div:focus-within {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(43, 77, 255, 0.18);
-}
-
-[data-baseweb="popover"] ul {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-ctl);
-}
-
-[data-baseweb="tag"] {
-  background: rgba(43, 77, 255, 0.1);
-  color: var(--blue);
-  border-radius: 4px;
-}
-
-label[data-testid="stWidgetLabel"] p {
-  color: var(--ink-2);
-  font-size: 0.92rem;
-  font-weight: 500;
-}
-
-/* ---------- Metrics: one data color each, like chart series ---------- */
-[data-testid="stMetric"] {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-top: 5px solid var(--blue);
-  border-radius: var(--r-card);
-  padding: 1rem 1.25rem 1.1rem;
-}
-
-[data-testid="stColumn"]:nth-child(2) [data-testid="stMetric"],
-[data-testid="column"]:nth-child(2) [data-testid="stMetric"] { border-top-color: var(--mint); }
-
-[data-testid="stColumn"]:nth-child(3) [data-testid="stMetric"],
-[data-testid="column"]:nth-child(3) [data-testid="stMetric"] { border-top-color: var(--yellow); }
-
-[data-testid="stColumn"]:nth-child(4) [data-testid="stMetric"],
-[data-testid="column"]:nth-child(4) [data-testid="stMetric"] { border-top-color: var(--coral); }
-
-[data-testid="stMetricLabel"] p { color: var(--ink-2); font-size: 0.9rem; }
-
-[data-testid="stMetricValue"] {
-  font-family: "Familjen Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 2.3rem;
-  color: var(--ink);
-}
-
-/* ---------- Alerts: tinted fill + matching outline ---------- */
-[data-testid="stAlert"] {
-  border-radius: var(--r-card);
-  border: 1.5px solid var(--rule);
-  background: var(--card);
-}
-
-[data-testid="stAlert"] p { color: var(--ink); }
-
-[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) { background: #e6f8f1; border-color: #8fdcc2; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"])    { background: #e9edff; border-color: #a9b8ff; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) { background: #fff7d6; border-color: #f0d560; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentError"])   { background: #ffe9e5; border-color: #ffb3a8; }
-
-/* ---------- Tables & charts ---------- */
-[data-testid="stDataFrame"] {
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-card);
-  overflow: hidden;
-  background: var(--card);
-}
-
-[data-testid="stImage"] img,
-[data-testid="stPyplot"] img {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-card);
-  padding: 0.75rem;
-}
-
-[data-testid="stExpander"] {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-card);
-}
-
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--ink-2); }
-
-/* ---------- Chat (Detective Bot) ---------- */
-[data-testid="stBottom"],
-[data-testid="stBottomBlockContainer"] {
-  background: transparent;
-}
-
-[data-testid="stBottom"] > div {
-  background: linear-gradient(to top, var(--paper) 65%, rgba(238, 241, 246, 0));
-}
-
-[data-testid="stChatInput"] {
-  background: var(--card);
-  border: 1.5px solid var(--ink);
-  border-radius: var(--r-card);
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: box-shadow 0.12s ease, border-color 0.12s ease;
-}
-
-[data-testid="stChatInput"] > div,
-[data-testid="stChatInput"] [data-baseweb="textarea"],
-[data-testid="stChatInput"] [data-baseweb="base-input"] {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-[data-testid="stChatInput"]:focus-within {
-  border-color: var(--blue);
-  box-shadow: 3px 3px 0 var(--blue);
-}
-
-[data-testid="stChatInput"] textarea {
-  color: var(--ink) !important;
-  -webkit-text-fill-color: var(--ink);
-  caret-color: var(--blue);
-  font-family: "Instrument Sans", system-ui, sans-serif;
-  font-size: 1rem;
-}
-
-[data-testid="stChatInput"] textarea::placeholder {
-  color: var(--ink-2) !important;
-  -webkit-text-fill-color: var(--ink-2);
-  opacity: 1;
-}
-
-[data-testid="stChatInputSubmitButton"] {
-  background: var(--blue);
-  color: #ffffff;
-  border-radius: var(--r-ctl);
-}
-
-[data-testid="stChatInputSubmitButton"] svg { fill: #ffffff; color: #ffffff; }
-
-[data-testid="stChatInputSubmitButton"]:disabled {
-  background: var(--rule);
-}
-
-[data-testid="stChatInputSubmitButton"]:disabled svg { fill: var(--ink-2); color: var(--ink-2); }
-
-/* messages */
-[data-testid="stChatMessage"] {
-  background: var(--card);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--r-card);
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-[data-testid="stChatMessage"] p,
-[data-testid="stChatMessage"] li { color: var(--ink); }
-
-/* ---------- Responsive & motion ---------- */
-@media (max-width: 768px) {
-  .block-container { padding: 1.25rem 1rem 3rem; }
-  [data-testid="stMetricValue"] { font-size: 1.9rem; }
-  .stApp { background-size: 24px 24px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; transform: none !important; }
+/* ---------- Sidebar ---------- */
+/* Streamlit renders the visible sidebar surface on its first child. */
+[data-testid="stSidebar"] > div:first-child {
+    background: var(--ink);
+    border-right: none;
 }
