@@ -93,3 +93,143 @@ hr {
     background: var(--ink);
     border-right: none;
 }
+
+[data-testid="stSidebar"] {
+    color: #f8f9fc;
+}
+
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
+    color: #f8f9fc;
+}
+
+[data-testid="stSidebar"] img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 1.25rem;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    color: #e7ebf4;
+}
+
+/* ---------- Streamlit content surfaces ---------- */
+[data-testid="stMetric"] {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-card);
+    padding: 1rem 1.1rem;
+    box-shadow: 0 2px 8px rgba(20, 33, 61, 0.04);
+}
+
+[data-testid="stMetricLabel"],
+[data-testid="stMetricValue"] {
+    color: var(--ink);
+}
+
+[data-testid="stAlert"] {
+    border-radius: var(--r-card);
+}
+
+[data-testid="stFileUploader"] section,
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+    border-radius: var(--r-card);
+}
+
+[data-testid="stFileUploader"] section {
+    color: #000000 !important;
+    background: #ffffff !important;
+    border: 1px dashed #9ba8c0;
+}
+
+[data-testid="stFileUploader"] section,
+[data-testid="stFileUploader"] section label,
+[data-testid="stFileUploader"] section span,
+[data-testid="stFileUploader"] section small,
+[data-testid="stFileUploader"] section p {
+    color: #000000 !important;
+}
+
+[data-testid="stFileUploader"] button {
+    color: #000000 !important;
+    background: #ffffff !important;
+    border-color: #9ba8c0 !important;
+}
+
+[data-testid="stFileUploader"] button:hover {
+    color: #000000 !important;
+    background: #f2f4f8 !important;
+    border-color: #657493 !important;
+}
+
+[data-testid="stChatInput"] button {
+    color: #ffffff !important;
+    background: var(--blue) !important;
+    border-color: var(--blue) !important;
+}
+
+[data-testid="stChatInput"] button:hover {
+    color: #ffffff !important;
+    background: #1e3de0 !important;
+    border-color: #1e3de0 !important;
+}
+
+[data-testid="stChatInput"] {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-card);
+}
+
+[data-testid="stChatInput"] textarea {
+    color: var(--ink) !important;
+    background: var(--card) !important;
+    caret-color: var(--blue);
+}
+
+[data-testid="stChatInput"] textarea::placeholder {
+    color: var(--ink-2) !important;
+    opacity: 1;
+}
+
+[data-testid="stButton"] button,
+[data-testid="stDownloadButton"] button {
+    color: #ffffff;
+    background: var(--blue);
+    border-color: var(--blue);
+    border-radius: var(--r-ctl);
+    font-weight: 600;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+[data-testid="stButton"] button:hover,
+[data-testid="stDownloadButton"] button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 33, 61, 0.12);
+}
+
+[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+[data-testid="stMultiSelect"] [data-baseweb="select"] > div {
+    border-radius: var(--r-ctl);
+}
+
+/* Keep charts, tables, and controls usable on narrow Cloud/mobile viewports. */
+@media (max-width: 768px) {
+    [data-testid="stMainBlockContainer"],
+    .block-container {
+        padding: 1.25rem 1rem 2.5rem;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+    }
+
+    [data-testid="stMetric"] {
+        padding: 0.8rem;
+    }
+}

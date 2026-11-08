@@ -59,9 +59,9 @@ def ask_ai(context, question):
         {
             'role' : 'user',
             'content' : f"""
-'Dataset Content : {context}
-User Question : {question}
-"""
+                        'Dataset Content : {context}
+                        User Question : {question}
+                    """
         }
       ], 
       temperature = 0.3,

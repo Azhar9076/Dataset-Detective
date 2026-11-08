@@ -61,8 +61,10 @@ st.set_page_config(
 
 load_css("style.css")
 
-# Page logo
-st.sidebar.image('assets/dataset-detective-logo-light.png', use_container_width=True)
+st.sidebar.image(
+    str(Path(__file__).parent / 'assets' / 'dataset-detective-logo-B-white.png'),
+    use_container_width=True,
+)
 
 # application title
 st.title('Dataset Detective')
