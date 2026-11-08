@@ -62,7 +62,7 @@ st.set_page_config(
 load_css("style.css")
 
 st.sidebar.image(
-    str(Path(__file__).parent / 'assets' / 'dataset-detective-logo-B-white.png'),
+    str(Path(__file__).parent / 'assets' / 'dataset-detective-logo-light.png'),
     use_container_width=True,
 )
 

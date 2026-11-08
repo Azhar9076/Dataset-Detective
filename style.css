@@ -107,11 +107,16 @@ hr {
     color: #f8f9fc;
 }
 
-[data-testid="stSidebar"] img {
+[data-testid="stSidebar"] [data-testid="stImage"] img {
     display: block;
+    width: 100% !important;
     max-width: 100%;
     height: auto;
-    margin: 0 auto 1.25rem;
+    box-sizing: border-box;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin: 0 0 1.25rem;
 }
 
 [data-testid="stSidebar"] [data-testid="stRadio"] label {
