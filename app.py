@@ -24,6 +24,11 @@ from modules.cleaner import (
     handle_missing_values
 )
 
+from ai_assistant import (
+    ask_ai,
+    get_dataset_context
+)
+
 from pathlib import Path
 
 @st.cache_data
@@ -35,7 +40,7 @@ def load_css(file_name: str) -> None:
     css = Path(__file__).parent / file_name
     st.markdown(f"<style>{css.read_text()}</style>", unsafe_allow_html=True)
 
-load_css("style.css")
+
 
 # Page Configuration
 st.set_page_config(
@@ -47,8 +52,10 @@ st.set_page_config(
     }
 )
 
+load_css("style.css")
+
 # Page logo
-st.sidebar.image('assets/dataset-detective-logo-B.png', use_container_width=True)
+st.sidebar.image('assets/dataset-detective-logo-light.png', use_container_width=True)
 
 # application title
 st.title('Dataset Detective')
@@ -62,7 +69,7 @@ st.write(
 st.sidebar.title('Navigation')
 page = st.sidebar.radio(
     'Select Section',
-    ['Dashboard', 'Data Analysis', 'Data Visualization', 'Data Cleaning']
+    ['Dashboard', 'Data Analysis', 'Data Visualization', 'Data Cleaning', 'Detective Bot']
 )
 
 # welcome message
@@ -129,7 +136,8 @@ elif page == 'Data Analysis':
         if state is not None:
             st.dataframe(state)
         else :
-            st.write('There no numerical column')    
+            st.write('There no numerical column')
+
     else:
         st.warning('Please fisrt upload your Csv file')        
 
@@ -306,6 +314,19 @@ elif page == 'Data Cleaning':
     else:
         st.warning('Please upload first CSV file.')
 
+elif page == 'Detective Bot':
+    st.subheader('Dataset Detective Bot')
+    # df = st.session_state['dataset']  
+    if 'dataset' in st.session_state:
+        user = st.chat_input('Ask about your dataset...')
+        if user:
+            df = st.session_state['dataset']  
+            st.write('You :', user)
+            context = get_dataset_context(df)
+            bot = ask_ai(context, user)
+            st.write('Bot :', bot)
+    else:
+        st.warning('Please uppload your csv file')
 
 else:
     st.error('You choose something wrong!')    

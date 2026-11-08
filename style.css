@@ -1,299 +1,381 @@
-/* Dataset Detective: Streamlit theme
-   One accent (ultramarine), cool neutrals, flat surfaces, thin borders. */
+/* ==========================================================
+   Dataset Detective — analytics UI for Streamlit
+   Concept: graph-paper workspace, ink-navy sidebar,
+   one data color per metric (blue / mint / yellow / coral)
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap");
 
 :root {
-    --bg: #f5f6f8;
-    --surface: #ffffff;
-    --ink: #1b1f2a;
-    --muted: #5b6472;
-    --line: #dde1e7;
-    --accent: #2d4fd6;
-    --accent-hover: #2340b8;
-    --accent-soft: #e8edfc;
-    --radius: 6px;
+  --paper:   #eef1f6;
+  --card:    #ffffff;
+  --ink:     #14213d;
+  --ink-2:   #4a5878;   /* secondary text */
+  --rule:    #d3d9e6;   /* borders */
+  --blue:    #2b4dff;   /* primary action */
+  --mint:    #12b886;
+  --yellow:  #ffd43b;
+  --coral:   #ff6b57;
+  --r-card:  8px;
+  --r-ctl:   6px;
 }
 
-/* Base */
+/* ---------- Base ---------- */
 html, body, .stApp, [class*="css"] {
-    font-family: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    color: var(--ink);
+  font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .stApp {
-    background: var(--bg);
+  color: var(--ink);
+  background-color: var(--paper);
+  /* graph paper */
+  background-image:
+    linear-gradient(rgba(20, 33, 61, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 33, 61, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-[data-testid="stHeader"] {
-    background: transparent;
-}
+[data-testid="stHeader"] { background: transparent; }
+#MainMenu, footer { visibility: hidden; }
 
 .block-container {
-    max-width: 1180px;
-    padding-top: 2.5rem;
-    padding-bottom: 4rem;
+  max-width: 1180px;
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
 }
 
-/* Force readable text even if Streamlit starts in dark mode */
-[data-testid="stWidgetLabel"] p,
-[data-testid="stSidebar"] label p,
-[data-testid="stSidebar"] p,
-[data-testid="stFileUploader"] label p,
-[data-testid="stMarkdownContainer"] p,
-.stApp li {
-    color: var(--ink);
+/* ---------- Type ---------- */
+h1, h2, h3, h4 {
+  font-family: "Familjen Grotesk", "Instrument Sans", sans-serif;
+  color: var(--ink);
+  letter-spacing: -0.015em;
 }
 
-[data-testid="stFileUploaderDropzoneInstructions"] *,
-[data-testid="stFileUploader"] small {
-    color: var(--muted) !important;
-}
-
-/* Type scale */
-h1 {
-    font-size: 2rem !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    padding-bottom: 0.25rem !important;
-}
-
-h2, h3 {
-    font-weight: 600 !important;
-    letter-spacing: -0.01em;
-}
-
-h3 {
-    font-size: 1.2rem !important;
-}
-
-p, li, label {
-    line-height: 1.6;
-}
+h1 { font-size: clamp(2.4rem, 4.5vw, 3.6rem); font-weight: 700; line-height: 1.05; }
+h2 { font-size: 1.9rem; font-weight: 700; }
+h3 { font-size: 1.35rem; font-weight: 700; }
 
 [data-testid="stMarkdownContainer"] p {
-    max-width: 68ch;
+  color: var(--ink);
+  line-height: 1.65;
+  max-width: 72ch;
 }
 
-hr {
-    border: none !important;
-    border-top: 1px solid var(--line) !important;
-    margin: 1.75rem 0 !important;
-}
+hr { border: none; border-top: 1.5px solid var(--ink); opacity: 0.12; margin: 2rem 0; }
 
-/* Sidebar as navigation */
+/* ---------- Sidebar (the dark anchor) ---------- */
 [data-testid="stSidebar"] {
-    background: var(--surface);
-    border-right: 1px solid var(--line);
+  background: var(--ink);
+  border-right: none;
 }
 
-[data-testid="stSidebar"] h1 {
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
-    color: var(--muted);
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] { padding-top: 0.5rem; }
+
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
 }
 
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span { color: #e9edf7; }
+
+[data-testid="stSidebar"] img { border-radius: var(--r-card); }
+
+/* widget label ("Select Section"): readable on navy */
+[data-testid="stSidebar"] label[data-testid="stWidgetLabel"] p {
+  color: #a9b6d6;
+  font-size: 0.85rem;
+}
+
+/* ----- nav items ----- */
 [data-testid="stSidebar"] [role="radiogroup"] {
-    gap: 2px;
+  gap: 0.25rem;
+  width: 100%;
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label {
-    padding: 0.55rem 0.75rem;
-    border-radius: var(--radius);
-    margin: 0;
-    width: 100%;
-    cursor: pointer;
+[data-testid="stSidebar"] [role="radiogroup"] label {
+  width: 100%;
+  margin: 0;
+  padding: 0.65rem 0.9rem;
+  border-radius: var(--r-ctl);
+  cursor: pointer;
+  align-items: center;
+  transition: background 0.15s ease;
 }
 
-/* hide the radio dot, the highlighted row shows the selection */
-[data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
-    display: none !important;
+/* hide the radio dot */
+[data-testid="stSidebar"] [role="radiogroup"] label > div:first-child { display: none; }
+
+[data-testid="stSidebar"] [role="radiogroup"] label p {
+  margin: 0;
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #dfe5f4;
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-    background: var(--bg);
+[data-testid="stSidebar"] [role="radiogroup"] label:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* active item */
+[data-testid="stSidebar"] [role="radiogroup"] label[aria-checked="true"],
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
+  background: var(--yellow);
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
-    background: var(--accent-soft);
+[data-testid="stSidebar"] [role="radiogroup"] label[aria-checked="true"] p,
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) p {
+  color: var(--ink);
+  font-weight: 600;
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p {
-    color: var(--accent);
-    font-weight: 600;
+/* sidebar footer: dataset status */
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+  color: #a9b6d6;
+  font-size: 0.85rem;
 }
 
-/* Metrics */
-[data-testid="stMetric"] {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-}
+[data-testid="stSidebar"] hr { border-top-color: #ffffff; opacity: 0.15; }
 
-[data-testid="stMetricLabel"] p {
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-[data-testid="stMetricValue"] {
-    font-size: 1.75rem;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-}
-
-/* Buttons */
+/* ---------- Buttons (the one bold element) ---------- */
 .stButton > button,
-[data-testid="stDownloadButton"] > button {
-    background: var(--accent);
-    color: #fff;
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    padding: 0.5rem 1.1rem;
-    font-weight: 600;
-    box-shadow: none;
-    transition: background-color 0.15s ease;
+.stDownloadButton > button {
+  background: var(--blue);
+  color: #ffffff;
+  font-weight: 600;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-ctl);
+  padding: 0.6rem 1.3rem;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .stButton > button:hover,
-[data-testid="stDownloadButton"] > button:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-    color: #fff;
+.stDownloadButton > button:hover {
+  color: #ffffff;
+  border-color: var(--ink);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 
 .stButton > button:active,
-[data-testid="stDownloadButton"] > button:active {
-    background: var(--accent-hover);
-    color: #fff;
+.stDownloadButton > button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
-/* Inputs */
-div[data-baseweb="select"] > div,
-div[data-baseweb="input"] > div {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: none;
+.stButton > button:focus-visible,
+.stDownloadButton > button:focus-visible,
+[data-testid="stFileUploader"] button:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
 }
 
-div[data-baseweb="select"] > div:hover {
-    border-color: #b9c0cb;
-}
-
-div[data-baseweb="select"] > div:focus-within {
-    border-color: var(--accent);
-}
-
-.stSelectbox label p,
-.stMultiSelect label p,
-.stRadio > label p {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--muted);
-}
-
-/* Multiselect tags */
-span[data-baseweb="tag"] {
-    background: var(--accent-soft) !important;
-    color: var(--accent) !important;
-    border-radius: 4px;
-}
-
-/* File uploader */
+/* ---------- File uploader ---------- */
 [data-testid="stFileUploader"] section {
-    background: var(--surface);
-    border: 1px dashed #b9c0cb;
-    border-radius: var(--radius);
-    padding: 1.5rem;
+  background: var(--card);
+  border: 2px dashed var(--ink);
+  border-radius: var(--r-card);
+  padding: 2rem 1.5rem;
+  transition: background 0.15s ease;
 }
 
-[data-testid="stFileUploader"] section:hover {
-    border-color: var(--accent);
-}
+[data-testid="stFileUploader"] section:hover { background: #f7f9ff; }
 
 [data-testid="stFileUploader"] button {
-    background: var(--surface);
-    color: var(--ink);
-    border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-ctl);
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
-[data-testid="stFileUploader"] button:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--surface);
+/* ---------- Inputs & selects ---------- */
+[data-baseweb="select"] > div,
+[data-baseweb="input"] > div,
+[data-baseweb="textarea"] {
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-ctl);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Alerts: flat, with a coloured left edge that carries the status */
+[data-baseweb="select"] > div:hover,
+[data-baseweb="input"] > div:hover { border-color: var(--ink-2); }
+
+[data-baseweb="select"] > div:focus-within,
+[data-baseweb="input"] > div:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(43, 77, 255, 0.18);
+}
+
+[data-baseweb="popover"] ul {
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-ctl);
+}
+
+[data-baseweb="tag"] {
+  background: rgba(43, 77, 255, 0.1);
+  color: var(--blue);
+  border-radius: 4px;
+}
+
+label[data-testid="stWidgetLabel"] p {
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* ---------- Metrics: one data color each, like chart series ---------- */
+[data-testid="stMetric"] {
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-top: 5px solid var(--blue);
+  border-radius: var(--r-card);
+  padding: 1rem 1.25rem 1.1rem;
+}
+
+[data-testid="stColumn"]:nth-child(2) [data-testid="stMetric"],
+[data-testid="column"]:nth-child(2) [data-testid="stMetric"] { border-top-color: var(--mint); }
+
+[data-testid="stColumn"]:nth-child(3) [data-testid="stMetric"],
+[data-testid="column"]:nth-child(3) [data-testid="stMetric"] { border-top-color: var(--yellow); }
+
+[data-testid="stColumn"]:nth-child(4) [data-testid="stMetric"],
+[data-testid="column"]:nth-child(4) [data-testid="stMetric"] { border-top-color: var(--coral); }
+
+[data-testid="stMetricLabel"] p { color: var(--ink-2); font-size: 0.9rem; }
+
+[data-testid="stMetricValue"] {
+  font-family: "Familjen Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 2.3rem;
+  color: var(--ink);
+}
+
+/* ---------- Alerts: tinted fill + matching outline ---------- */
 [data-testid="stAlert"] {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-left-width: 4px;
-    border-radius: var(--radius);
-    color: var(--ink);
+  border-radius: var(--r-card);
+  border: 1.5px solid var(--rule);
+  background: var(--card);
 }
 
-[data-testid="stAlert"] > div,
-[data-testid="stAlert"] [data-baseweb="notification"] {
-    background: var(--surface) !important;
-    box-shadow: none !important;
-    color: var(--ink) !important;
-}
+[data-testid="stAlert"] p { color: var(--ink); }
 
-[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) { border-left-color: #2e7d4f; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentError"])   { border-left-color: #c0392b; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) { border-left-color: #b7791f; }
-[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"])    { border-left-color: var(--accent); }
+[data-testid="stAlert"]:has([data-testid="stAlertContentSuccess"]) { background: #e6f8f1; border-color: #8fdcc2; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentInfo"])    { background: #e9edff; border-color: #a9b8ff; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentWarning"]) { background: #fff7d6; border-color: #f0d560; }
+[data-testid="stAlert"]:has([data-testid="stAlertContentError"])   { background: #ffe9e5; border-color: #ffb3a8; }
 
-div[data-testid="stAlertContentSuccess"] { color: var(--ink); }
-div[data-testid="stAlertContentError"]   { color: var(--ink); }
-div[data-testid="stAlertContentWarning"] { color: var(--ink); }
-div[data-testid="stAlertContentInfo"]    { color: var(--ink); }
-
-/* Tables and charts */
-[data-testid="stDataFrame"],
-[data-testid="stTable"] {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--surface);
+/* ---------- Tables & charts ---------- */
+[data-testid="stDataFrame"] {
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--card);
 }
 
 [data-testid="stImage"] img,
 [data-testid="stPyplot"] img {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 0.75rem;
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-card);
+  padding: 0.75rem;
 }
 
-/* Keyboard focus */
-:focus-visible {
-    outline: 2px solid var(--accent) !important;
-    outline-offset: 2px;
+[data-testid="stExpander"] {
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-card);
 }
 
-/* Hide Streamlit chrome */
-#MainMenu,
-[data-testid="stToolbar"],
-[data-testid="stDeployButton"],
-footer {
-    visibility: hidden;
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-2); }
+
+/* ---------- Chat (Detective Bot) ---------- */
+[data-testid="stBottom"],
+[data-testid="stBottomBlockContainer"] {
+  background: transparent;
 }
 
-/* Small screens */
-@media (max-width: 640px) {
-    .block-container {
-        padding: 1.25rem 1rem 3rem;
-    }
-    h1 {
-        font-size: 1.6rem !important;
-    }
+[data-testid="stBottom"] > div {
+  background: linear-gradient(to top, var(--paper) 65%, rgba(238, 241, 246, 0));
+}
+
+[data-testid="stChatInput"] {
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-card);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInput"] [data-baseweb="textarea"],
+[data-testid="stChatInput"] [data-baseweb="base-input"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+[data-testid="stChatInput"]:focus-within {
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+
+[data-testid="stChatInput"] textarea {
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--blue);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+[data-testid="stChatInput"] textarea::placeholder {
+  color: var(--ink-2) !important;
+  -webkit-text-fill-color: var(--ink-2);
+  opacity: 1;
+}
+
+[data-testid="stChatInputSubmitButton"] {
+  background: var(--blue);
+  color: #ffffff;
+  border-radius: var(--r-ctl);
+}
+
+[data-testid="stChatInputSubmitButton"] svg { fill: #ffffff; color: #ffffff; }
+
+[data-testid="stChatInputSubmitButton"]:disabled {
+  background: var(--rule);
+}
+
+[data-testid="stChatInputSubmitButton"]:disabled svg { fill: var(--ink-2); color: var(--ink-2); }
+
+/* messages */
+[data-testid="stChatMessage"] {
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-card);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li { color: var(--ink); }
+
+/* ---------- Responsive & motion ---------- */
+@media (max-width: 768px) {
+  .block-container { padding: 1.25rem 1rem 3rem; }
+  [data-testid="stMetricValue"] { font-size: 1.9rem; }
+  .stApp { background-size: 24px 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    * {
-        transition: none !important;
-        animation: none !important;
-    }
+  * { transition: none !important; transform: none !important; }
 }
